@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TransManager</string>
+    <string name="trans_number">차량번호</string>
+    <string name="password">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="regist_trans">차량 등록</string>
 </resources>

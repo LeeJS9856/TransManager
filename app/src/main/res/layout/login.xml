@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Auto layout, variables, and unit scale are not yet supported -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Sky">
+
+    <View
+        android:layout_width="575.66dp"
+        android:layout_height="507.65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-135dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="-100dp"
+        android:layout_marginBottom="-100dp"
+        android:background="#FFFFFF"
+        android:rotation="-10" />
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/image_profile"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/login_image_profile"
+        android:backgroundTint="#FFFFFF"
+        android:elevation="4dp" />
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <EditText
+        android:id="@+id/edittext_trans_number"
+        android:layout_width="320dp"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="293dp"
+        android:background="@drawable/login_edittext_trans_number"
+        android:fontFamily="@font/inter"
+        android:hint="@string/trans_number"
+        android:inputType="number"
+        android:maxLength="4"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:textColorHint="@color/hintGray"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="320dp"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="370dp"
+        android:background="@drawable/login_edittext_trans_number"
+        android:fontFamily="@font/inter"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:maxLength="18"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:textColorHint="@color/hintGray"
+        android:textSize="18sp" />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <android.widget.Button
+        android:id="@+id/button_login"
+        android:layout_width="320dp"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="447dp"
+        android:background="@drawable/login_button_login"
+        android:backgroundTint="@color/Sky"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <android.widget.Button
+        android:id="@+id/button_regist_trans"
+        android:layout_width="320dp"
+        android:layout_height="33dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="37dp"
+        android:background="@drawable/login_button_regist_trans"
+        android:text="@string/regist_trans"
+        android:textSize="18sp"
+        android:textColor="#9DB3FF"
+        android:fontFamily="@font/inter_bold"
+        />
+</RelativeLayout>
