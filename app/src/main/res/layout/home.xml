@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Auto layout, variables, and unit scale are not yet supported -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <TextView
+        android:id="@+id/text_trans_number"
+        android:layout_width="79dp"
+        android:layout_height="27dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/trans_number"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:gravity="top"
+        android:fontFamily="@font/inter"
+        />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/line_head"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/home_line_head"
+        />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <android.widget.Button
+        android:id="@+id/button_regist_trans"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/home_button_regist_trans"
+        android:elevation="2dp"
+
+        android:fontFamily="@font/kopubdotumbold"
+        android:gravity="center|start"
+        android:paddingStart="31dp"
+        android:paddingEnd="45dp"
+        android:text="@string/regist_trans"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:drawableEnd="@drawable/home_image_truck"
+        android:drawableTint="@color/white"/>
+
+    <android.widget.Button
+        android:id="@+id/button_list_trans"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/home_button_regist_trans"
+        android:backgroundTint="#96CBFD"
+        android:elevation="2dp"
+
+        android:fontFamily="@font/kopubdotumbold"
+        android:gravity="center|end"
+        android:paddingStart="45dp"
+        android:paddingEnd="31dp"
+        android:text="@string/list_trans"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:drawableStart="@drawable/home_image_calender"
+        android:drawableTint="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp">
+
+        <android.widget.Button
+            android:id="@+id/button_edit_profile"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="63dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="9dp"
+            android:background="@drawable/home_button_edit_profile"
+            android:elevation="2dp"
+            android:text="@string/edit_profile"
+            android:textSize="24sp"
+            android:textColor="#75BCFF"
+            android:fontFamily="@font/kopubdotumbold"
+            />
+
+        <!-- Auto layout, variables, and unit scale are not yet supported -->
+        <android.widget.Button
+            android:id="@+id/button_logout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="63dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/home_button_logout"
+            android:elevation="2dp"
+            android:text="@string/logout"
+            android:textSize="24sp"
+            android:textColor="#A9BBFB"
+            android:fontFamily="@font/kopubdotumbold"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

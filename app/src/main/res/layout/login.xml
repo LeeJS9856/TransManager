@@ -75,21 +75,21 @@
         android:layout_marginTop="447dp"
         android:background="@drawable/login_button_login"
         android:backgroundTint="@color/Sky"
-        android:fontFamily="@font/inter_bold"
+        android:fontFamily="@font/kopubdotumbold"
         android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="22sp" />
 
     <!-- Auto layout, variables, and unit scale are not yet supported -->
     <android.widget.Button
-        android:id="@+id/button_regist_trans"
+        android:id="@+id/button_regist_vihicle"
         android:layout_width="320dp"
         android:layout_height="33dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="37dp"
         android:background="@drawable/login_button_regist_trans"
-        android:text="@string/regist_trans"
+        android:text="@string/regist_vihicle"
         android:textSize="18sp"
         android:textColor="#9DB3FF"
         android:fontFamily="@font/inter_bold"
