@@ -4,6 +4,7 @@ package org.techtown.transmanager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,7 +34,7 @@ public class RegistVihicle extends AppCompatActivity {
     private EditText ed_name, ed_vihicle_number, ed_phone_number, ed_password, ed_password_check;
     private android.widget.Button regist_request;
     private boolean validate = false;
-
+    private long mLastClickTime = 0; //중복 클릭 방지
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +63,12 @@ public class RegistVihicle extends AppCompatActivity {
             String phone_number = ed_phone_number.getText().toString();
             String password = ed_password.getText().toString();
             String password_check = ed_password_check.getText().toString();
+
+            //중복 클릭 방지
+            if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
 
             //차량번호 중복 확인
             Response.Listener<String> responseListener = new Response.Listener<String>() {
