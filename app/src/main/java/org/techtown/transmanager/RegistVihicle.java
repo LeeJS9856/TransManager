@@ -64,11 +64,7 @@ public class RegistVihicle extends AppCompatActivity {
             String password = ed_password.getText().toString();
             String password_check = ed_password_check.getText().toString();
 
-            //중복 클릭 방지
-            if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-                return;
-            }
-            mLastClickTime = SystemClock.elapsedRealtime();
+
 
             //차량번호 중복 확인
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -91,6 +87,11 @@ public class RegistVihicle extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(RegistVihicle.this);
             queue.add(validateRequest);
 
+            //중복 클릭 방지
+            if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             if(name.isEmpty()) { //이름 입력이 안 되었을 때
                 printToast("이름을 입력해주세요.");
             }
