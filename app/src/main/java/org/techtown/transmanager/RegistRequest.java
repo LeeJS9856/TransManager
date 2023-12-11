@@ -16,7 +16,7 @@ public class RegistRequest extends StringRequest {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("name", name);
+        map.put("username", name);
         map.put("vihiclenumber", vihiclenumber);
         map.put("phonenumber", phonenumber);
         map.put("password", password);

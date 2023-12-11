@@ -72,6 +72,7 @@ public class RegistVihicle extends AppCompatActivity {
                         boolean success = jsonResponse.getBoolean("success");
                         if(!success) {
                             printToast("이미 존재하는 차량번호입니다.");
+                            validate = false;
                         }else {
                             validate = true;
                         }
