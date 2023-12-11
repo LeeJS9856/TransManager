@@ -58,8 +58,8 @@ public class Login extends AppCompatActivity {
                             String password = jsonObject.getString("password");
                             Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
-                            intent.putExtra("log", "User");
                             intent.putExtra("vihicle_number", vihicle_number);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
                         else {
