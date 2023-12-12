@@ -108,7 +108,7 @@ public class RegistVihicle extends AppCompatActivity {
                 printToast("비밀번호를 입력해주세요.");
             }
             else if(!password.equals(password_check)) {
-                printToast("비밀번호가 일치하지 않습니다."); //비밀번호 확인이 비밀번호와 다를 때
+                printToast("비밀번호 재입력이 일치하지 않습니다."); //비밀번호 확인이 비밀번호와 다를 때
             }
             else {
                 Response.Listener<String> responseListener2 = new Response.Listener<String>() {

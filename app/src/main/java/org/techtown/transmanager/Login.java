@@ -56,14 +56,13 @@ public class Login extends AppCompatActivity {
                         if(success) {
                             String vihicle_number = jsonObject.getString("vihiclenumber");
                             String password = jsonObject.getString("password");
-                            Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
                             intent.putExtra("vihicle_number", vihicle_number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "차량번호 혹은 비밀번호가 않습니다.", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }catch (JSONException e) {

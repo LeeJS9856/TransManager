@@ -70,6 +70,7 @@ public class Home extends AppCompatActivity {
                 Intent intent = new Intent(Home.this, Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                Toast.makeText(Home.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
