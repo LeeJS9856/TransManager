@@ -4,9 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Home extends AppCompatActivity {
 
@@ -19,8 +27,8 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.home);
 
         //번들에서 값 받아오기
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Intent intent_bundle = getIntent();
+        Bundle bundle = intent_bundle.getExtras();
         String vihicle_number = bundle.getString("vihicle_number");
 
         //텍스트뷰, 버튼 정의
@@ -31,17 +39,41 @@ public class Home extends AppCompatActivity {
         logout = findViewById(R.id.button_logout);
 
 
+
         //상단 차량번호 바꾸기
         text_vihicle_number.setText(vihicle_number);
 
         //운송등록 클릭 이벤트
-        regist_trans.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home.this, RegistTrans.class);
-                intent.putExtra("vihicle_number", vihicle_number);
-                startActivity(intent);
-            }
+        regist_trans.setOnClickListener(v -> {
+
+            //제품 데이터 가져와서 배열에 집어넣기
+            Response.Listener<String> productResponseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try{
+                        JSONObject jsonResponse = new JSONObject(response);
+                        boolean success = jsonResponse.getBoolean("success");
+                        if(success) {
+                            int length = jsonResponse.length()-1;
+                            String[] arr = new String[length];
+                            for(int i=0;i<length;i++) {
+                                String db = jsonResponse.getString(String.valueOf(i));
+                                arr[i] = db;
+                            }
+                            Intent intent = new Intent(Home.this, RegistTrans.class);
+                            intent.putExtra("Product", arr);
+                            intent.putExtra("vihicle_number", vihicle_number);
+                            startActivity(intent);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            ProductRequest productRequest = new ProductRequest(productResponseListener);
+            RequestQueue ProductQueue = Volley.newRequestQueue(Home.this);
+            ProductQueue.add(productRequest);
         });
 
         //운송내역 클릭 이벤트
@@ -50,7 +82,7 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, ListTrans.class);
                 intent.putExtra("vihicle_number", vihicle_number);
-                startActivity(intent);
+
             }
         });
 
@@ -74,9 +106,6 @@ public class Home extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     public void onBackPressed() { //뒤로가기 두번 누를시 앱 종료
@@ -87,6 +116,61 @@ public class Home extends AppCompatActivity {
         } else {
             finish();
         }
+
+
+    }
+
+    public void giveIntent() { //RegistTrans에 줄 Intent 수정
+        //출발지 데이터 가져와서 배열에 집어넣기
+        Response.Listener<String> fromResponseListener = new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success) {
+                        int length = jsonResponse.length()-1;
+                        String[] arr = new String[length];
+                        for(int i=0;i<=length;i++) {
+                            String db = jsonResponse.getString(String.valueOf(i));
+                            arr[i] = db;
+                        }
+                        Intent intent = new Intent(Home.this, RegistTrans.class);
+                        intent.putExtra("From", arr);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        FromRequest  fromRequest = new FromRequest(fromResponseListener);
+        RequestQueue FromQueue = Volley.newRequestQueue(Home.this);
+        FromQueue.add(fromRequest);
+
+        //도착지 데이터 가져와서 배열에 집어넣기
+        Response.Listener<String> toResponseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success) {
+                        int length = jsonResponse.length()-1;
+                        String[] arr = new String[length];
+                        for(int i=0;i<=length;i++) {
+                            String db = jsonResponse.getString(String.valueOf(i));
+                            arr[i] = db;
+                        }
+                        Intent intent = new Intent(Home.this, RegistTrans.class);
+                        intent.putExtra("To", arr);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        ToRequest toRequest = new ToRequest(toResponseListener);
+        RequestQueue ToQueue = Volley.newRequestQueue(Home.this);
+        ToQueue.add(toRequest);
 
 
     }

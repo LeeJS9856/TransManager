@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity {
     android.widget.Button regist_vihicle, login;
     EditText ed_vihicle_number, ed_password;
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -54,10 +56,10 @@ public class Login extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         boolean success = jsonObject.getBoolean("success");
                         if(success) {
-                            String vihicle_number = jsonObject.getString("vihiclenumber");
+                            String db_vihicle_number = jsonObject.getString("vihiclenumber");
                             String password = jsonObject.getString("password");
                             Intent intent = new Intent(Login.this, Home.class);
-                            intent.putExtra("vihicle_number", vihicle_number);
+                            intent.putExtra("vihicle_number", db_vihicle_number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
