@@ -34,6 +34,7 @@ public class ListTrans extends AppCompatActivity {
     String vihicle_number, choiced_year, choiced_month;
     ImageButton bt_back;
     ArrayList<TransData> data = new ArrayList<>();
+    private long time = System.currentTimeMillis();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,8 @@ public class ListTrans extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 choiced_year = arr_year[i];
                 data.clear();
-                getTransData(choiced_year, choiced_month);
+                //맨 처음 데이터가 두번 불러와지는 오류 수정
+                if(System.currentTimeMillis() - now > 1000) getTransData(choiced_year, choiced_month);
                 //비동기적으로 작동하는 onresponse메서드를 위해 딜레이시켜서 리사이클러뷰 실행
                 new Handler().postDelayed(new Runnable() {
                     @Override
