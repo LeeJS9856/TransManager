@@ -1,6 +1,7 @@
 package org.techtown.transmanager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -26,6 +27,10 @@ import java.util.List;
 
 public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.ViewHolder> {
 
+    private Context context;
+    public TransDataAdapter(Context context) {
+        this.context = context;
+    }
     @NonNull
     @Override
     public TransDataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -94,7 +99,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 String end = dataSet.get(position).getEnd();
                 String quantity = dataSet.get(position).getQuantity();
 
-                Intent intent = new Intent(view.getContext(), EditTrans.class);
+                Intent intent = new Intent(context, EditTrans.class);
                 intent.putExtra("year", year);
                 intent.putExtra("month", month);
                 intent.putExtra("day", day);
@@ -103,7 +108,8 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 intent.putExtra("start", start);
                 intent.putExtra("end", end);
                 intent.putExtra("quantity", quantity);
-                view.getContext().startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                context.startActivity(intent);
             }
         });
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {

@@ -25,6 +25,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +64,7 @@ public class EditTrans extends AppCompatActivity {
         ed_quantity = findViewById(R.id.edittext_quantity);
 
         bt_edit = findViewById(R.id.button_edit_trans);
+        bt_back = findViewById(R.id.back);
 
         //뒤로가기 버튼 클릭 이벤트
         bt_back.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,9 @@ public class EditTrans extends AppCompatActivity {
                 finish();
             }
         });
+
+        //수량 초기값 설정
+        ed_quantity.setText(db_quantity);
 
         //출발지 데이터 가져와서 배열에 집어넣기
         Response.Listener<String> fromResponseListener = new Response.Listener<String>() {
@@ -91,7 +97,7 @@ public class EditTrans extends AppCompatActivity {
             }
         };
         FromRequest  fromRequest = new FromRequest(fromResponseListener);
-        RequestQueue FromQueue = Volley.newRequestQueue(RegistTrans.this);
+        RequestQueue FromQueue = Volley.newRequestQueue(EditTrans.this);
         FromQueue.add(fromRequest);
 
         //도착지 데이터 가져와서 배열에 집어넣기
@@ -115,7 +121,7 @@ public class EditTrans extends AppCompatActivity {
             }
         };
         ToRequest toRequest = new ToRequest(toResponseListener);
-        RequestQueue ToQueue = Volley.newRequestQueue(RegistTrans.this);
+        RequestQueue ToQueue = Volley.newRequestQueue(EditTrans.this);
         ToQueue.add(toRequest);
 
         //제품 데이터 가져와서 배열에 집어넣기
@@ -139,7 +145,7 @@ public class EditTrans extends AppCompatActivity {
             }
         };
         ProductRequest productRequest = new ProductRequest(productResponseListener);
-        RequestQueue ProductQueue = Volley.newRequestQueue(RegistTrans.this);
+        RequestQueue ProductQueue = Volley.newRequestQueue(EditTrans.this);
         ProductQueue.add(productRequest);
 
 
@@ -165,6 +171,22 @@ public class EditTrans extends AppCompatActivity {
                 sp_to.setAdapter(toAdapter);
                 sp_product.setAdapter(productAdapter);
 
+                //초기값 설정
+                for(int i=0;i<arr_From.length;i++) {
+                    if(arr_From[i].equals(db_start)) {
+                        sp_from.setSelection(i);
+                    }
+                }
+                for(int i=0;i<arr_To.length;i++) {
+                    if(arr_To[i].equals(db_end)) {
+                        sp_to.setSelection(i);
+                    }
+                }
+                for(int i=0;i<arr_Product.length;i++) {
+                    if(arr_Product[i].equals(db_product)) {
+                        sp_product.setSelection(i);
+                    }
+                }
 
                 sp_from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -203,5 +225,38 @@ public class EditTrans extends AppCompatActivity {
                 });
             }
         }, 1000);
+
+        //수정버튼 이벤트 처리하기
+        bt_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //수량 입력받기
+                entered_quantity = ed_quantity.getText().toString();
+
+                if(entered_quantity.isEmpty()) {
+                    printToast("수량을 입력해주세요");
+                }
+                else {
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Intent intent = new Intent(EditTrans.this, ListTrans.class);
+                            intent.putExtra("vihicle_number", db_vihiclenumber);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                    };
+                    EditTransUpdateRequest editTransUpdateRequest =
+                            new EditTransUpdateRequest(db_year, db_month, db_day, db_vihiclenumber,
+                                    choiced_product, choiced_from, choiced_to, entered_quantity, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(EditTrans.this);
+                    queue.add(editTransUpdateRequest);
+                }
+            }
+        });
+    }
+
+    private void printToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

@@ -21,6 +21,9 @@
             android:name=".EditProfile"
             android:exported="false" />
         <activity
+            android:name=".EditTrans"
+            android:exported="false" />
+        <activity
             android:name=".ListTrans"
             android:exported="false" />
         <activity

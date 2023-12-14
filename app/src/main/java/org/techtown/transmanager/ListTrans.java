@@ -72,7 +72,7 @@ public class ListTrans extends AppCompatActivity {
 
         //리사이클러뷰 정의하기
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        TransDataAdapter transDataAdapter = new TransDataAdapter();
+        TransDataAdapter transDataAdapter = new TransDataAdapter(ListTrans.this);
 
         //스피너 처리하기
         spinner_year = findViewById(R.id.spinner_year);
