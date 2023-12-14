@@ -1,16 +1,31 @@
 package org.techtown.transmanager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.ViewHolder> {
+
     @NonNull
     @Override
     public TransDataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,10 +44,16 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageButton btn_edit, btn_delete;
+
+
         private int viewType;
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
             this.viewType = viewType;
+
+            btn_edit = itemView.findViewById(R.id.button_edit);
+            btn_delete = itemView.findViewById(R.id.button_delete);
         }
         public void bind(TransData item) {
             if(viewType==TYPE_CHANGE_DATE) {
@@ -42,6 +63,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 bindUnChangedDate(item);
             }
         }
+
         private void bindChangeDate(TransData item) {
             TextView date = itemView.findViewById(R.id.text_date);
             TextView data = itemView.findViewById(R.id.text_data);
@@ -52,8 +74,81 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
             TextView data = itemView.findViewById(R.id.text_data);
             data.setText(item.getProduct()+" / "+item.getStart()+" / "+item.getEnd()+" / "+item.getQuantity());
         }
+
+
     }
 
+    //리사이클러뷰 속 데이터 수정, 삭제 버튼 이벤트 처리하기
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+        holder.btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String year = dataSet.get(position).getYear();
+                String month = dataSet.get(position).getMonth();
+                String day = dataSet.get(position).getDay();
+                String vihiclenumber = dataSet.get(position).getVihiclenumber();
+                String product = dataSet.get(position).getProduct();
+                String start = dataSet.get(position).getStart();
+                String end = dataSet.get(position).getEnd();
+                String quantity = dataSet.get(position).getQuantity();
+
+                Intent intent = new Intent(view.getContext(), EditTrans.class);
+                intent.putExtra("year", year);
+                intent.putExtra("month", month);
+                intent.putExtra("day", day);
+                intent.putExtra("vihiclenumber", vihiclenumber);
+                intent.putExtra("product", product);
+                intent.putExtra("start", start);
+                intent.putExtra("end", end);
+                intent.putExtra("quantity", quantity);
+                view.getContext().startActivity(intent);
+            }
+        });
+        holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(view.getContext());
+                alertBuilder.setTitle("경고");
+                alertBuilder.setMessage("해당 운송정보를 삭제하시겠습니까?");
+                alertBuilder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Response.Listener<String> deleteResponseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        };
+                        String year = dataSet.get(position).getYear();
+                        String month = dataSet.get(position).getMonth();
+                        String day = dataSet.get(position).getDay();
+                        String vihiclenumber = dataSet.get(position).getVihiclenumber();
+                        String product = dataSet.get(position).getProduct();
+                        String start = dataSet.get(position).getStart();
+                        String end = dataSet.get(position).getEnd();
+                        String quantity = dataSet.get(position).getQuantity();
+                        ListTransDeleteRequest deleteRequest = new ListTransDeleteRequest(year, month, day, vihiclenumber, product, start, end, quantity,deleteResponseListener);
+                        RequestQueue Queue = Volley.newRequestQueue(view.getContext());
+                        Queue.add(deleteRequest);
+
+                        dataSet.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemChanged(position, dataSet.size());
+                    }
+                });
+                alertBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog dialog = alertBuilder.create();
+                dialog.show();
+            }
+       });
+    }
 
     private ArrayList<TransData> dataSet = new ArrayList();
     public void submitData(ArrayList<TransData> newData) {

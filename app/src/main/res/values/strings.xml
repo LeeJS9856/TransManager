@@ -30,4 +30,5 @@
     <string name="hint_from">출발지를 선택하세요</string>
     <string name="hint_to">도착지를 선택하세요</string>
     <string name="hint_product">제품을 선택하세요</string>
+    <string name="edit_trans">운송 수정</string>
 </resources>

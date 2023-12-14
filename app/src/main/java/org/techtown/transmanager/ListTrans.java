@@ -33,7 +33,7 @@ public class ListTrans extends AppCompatActivity {
     String[] arr_month = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     String vihicle_number, choiced_year, choiced_month;
     ImageButton bt_back;
-    ArrayList<TransData> data = new ArrayList<>();
+    static ArrayList<TransData> data = new ArrayList<>();
     private long time = System.currentTimeMillis();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +141,7 @@ public class ListTrans extends AppCompatActivity {
     private ArrayList<TransData> getData() {
         return data;
     }
+
 
     //서버에서 데이터 가져오기
     private void getTransData(String year, String month) {
