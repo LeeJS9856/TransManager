@@ -58,7 +58,7 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, ListTrans.class);
                 intent.putExtra("vihicle_number", vihicle_number);
-
+                startActivity(intent);
             }
         });
 
