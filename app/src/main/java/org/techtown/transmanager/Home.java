@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Home extends AppCompatActivity {
 
     TextView text_vihicle_number;
@@ -45,35 +47,9 @@ public class Home extends AppCompatActivity {
 
         //운송등록 클릭 이벤트
         regist_trans.setOnClickListener(v -> {
-
-            //제품 데이터 가져와서 배열에 집어넣기
-            Response.Listener<String> productResponseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try{
-                        JSONObject jsonResponse = new JSONObject(response);
-                        boolean success = jsonResponse.getBoolean("success");
-                        if(success) {
-                            int length = jsonResponse.length()-1;
-                            String[] arr = new String[length];
-                            for(int i=0;i<length;i++) {
-                                String db = jsonResponse.getString(String.valueOf(i));
-                                arr[i] = db;
-                            }
-                            Intent intent = new Intent(Home.this, RegistTrans.class);
-                            intent.putExtra("Product", arr);
-                            intent.putExtra("vihicle_number", vihicle_number);
-                            startActivity(intent);
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            ProductRequest productRequest = new ProductRequest(productResponseListener);
-            RequestQueue ProductQueue = Volley.newRequestQueue(Home.this);
-            ProductQueue.add(productRequest);
+            Intent intent = new Intent(Home.this, RegistTrans.class);
+            intent.putExtra("vihicle_number", vihicle_number);
+            startActivity(intent);
         });
 
         //운송내역 클릭 이벤트
@@ -116,61 +92,6 @@ public class Home extends AppCompatActivity {
         } else {
             finish();
         }
-
-
-    }
-
-    public void giveIntent() { //RegistTrans에 줄 Intent 수정
-        //출발지 데이터 가져와서 배열에 집어넣기
-        Response.Listener<String> fromResponseListener = new Response.Listener<String>() {
-            public void onResponse(String response) {
-                try{
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if(success) {
-                        int length = jsonResponse.length()-1;
-                        String[] arr = new String[length];
-                        for(int i=0;i<=length;i++) {
-                            String db = jsonResponse.getString(String.valueOf(i));
-                            arr[i] = db;
-                        }
-                        Intent intent = new Intent(Home.this, RegistTrans.class);
-                        intent.putExtra("From", arr);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        FromRequest  fromRequest = new FromRequest(fromResponseListener);
-        RequestQueue FromQueue = Volley.newRequestQueue(Home.this);
-        FromQueue.add(fromRequest);
-
-        //도착지 데이터 가져와서 배열에 집어넣기
-        Response.Listener<String> toResponseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try{
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if(success) {
-                        int length = jsonResponse.length()-1;
-                        String[] arr = new String[length];
-                        for(int i=0;i<=length;i++) {
-                            String db = jsonResponse.getString(String.valueOf(i));
-                            arr[i] = db;
-                        }
-                        Intent intent = new Intent(Home.this, RegistTrans.class);
-                        intent.putExtra("To", arr);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ToRequest toRequest = new ToRequest(toResponseListener);
-        RequestQueue ToQueue = Volley.newRequestQueue(Home.this);
-        ToQueue.add(toRequest);
 
 
     }

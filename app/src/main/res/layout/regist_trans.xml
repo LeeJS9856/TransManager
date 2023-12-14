@@ -82,9 +82,9 @@
                 android:layout_marginBottom="9dp"
                 android:layout_weight="5"
                 android:background="@drawable/regist_vihivle_edit_text"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:fontFamily="@font/inter"  />
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:fontFamily="@font/inter" />
 
         </LinearLayout>
         <LinearLayout
@@ -117,8 +117,8 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:background="@drawable/regist_vihivle_edit_text"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:fontFamily="@font/inter" />
 
         </LinearLayout>
@@ -152,8 +152,8 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:background="@drawable/regist_vihivle_edit_text"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp" />
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -191,7 +191,7 @@
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:fontFamily="@font/inter"
-                android:inputType="number" />
+                android:inputType="numberDecimal"/>
 
         </LinearLayout>
 
