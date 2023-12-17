@@ -2,10 +2,15 @@ package org.techtown.transmanager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,15 +23,24 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class Login extends AppCompatActivity {
     android.widget.Button regist_vihicle, login;
     EditText ed_vihicle_number, ed_password;
+    CheckBox check_autoLogin;
+    String vihiclenumber, password;
 
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        //자동로그인 체크박스
+        check_autoLogin = findViewById(R.id.check_autoLogin);
+        check_autoLogin.setChecked(false);
+
         //ID, PW
         ed_vihicle_number = findViewById(R.id.edittext_vihivle_number);
         ed_password = findViewById(R.id.edittext_password);
@@ -40,6 +54,19 @@ public class Login extends AppCompatActivity {
             Intent intent = new Intent(this, RegistVihicle.class);
             startActivity(intent);
         });
+
+        //자동로그인
+        Map<String, String> LoginInfo = SharedPreferencesManager.getLoginInfo(this);
+        if(!LoginInfo.isEmpty()) {
+            check_autoLogin.setChecked(true);
+            vihiclenumber = LoginInfo.get("vihiclenumber");
+            password = LoginInfo.get("password");
+            ed_vihicle_number.setText(vihiclenumber);
+            ed_password.setText(password);
+        }
+        else {
+            check_autoLogin.setChecked(false);
+        }
 
         //로그인 버튼
         login = findViewById(R.id.button_login);
@@ -58,6 +85,15 @@ public class Login extends AppCompatActivity {
                         if(success) {
                             String db_vihicle_number = jsonObject.getString("vihiclenumber");
                             String password = jsonObject.getString("password");
+
+                            if(check_autoLogin.isChecked()) {
+                                SharedPreferencesManager.setLoginInfo(Login.this, db_vihicle_number, password);
+                            }
+                            else {
+                                SharedPreferencesManager.clearPreferences(Login.this);
+                            }
+
+
                             Intent intent = new Intent(Login.this, Home.class);
                             intent.putExtra("vihicle_number", db_vihicle_number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -76,6 +112,16 @@ public class Login extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(Login.this);
             queue.add(loginRequest);
         });
+
+
+
+
+
+
     }
+
+
+
+
 }
 

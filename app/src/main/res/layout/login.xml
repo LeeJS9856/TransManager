@@ -94,4 +94,23 @@
         android:textColor="#9DB3FF"
         android:fontFamily="@font/inter_bold"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_login"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity = "center_horizontal"
+        android:gravity="center_horizontal">
+        <CheckBox
+            android:id="@+id/check_autoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity = "center"
+            android:text="@string/auto_login"
+            android:fontFamily="@font/inter_bold"/>
+    </LinearLayout>
+
+
 </RelativeLayout>
