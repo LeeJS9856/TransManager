@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/text_edit_profile"
         android:layout_width="wrap_content"
-        android:layout_height="27dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
@@ -61,7 +61,7 @@
             <TextView
                 android:id="@+id/text_name"
                 android:layout_width="0dp"
-                android:layout_height="27dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -70,7 +70,7 @@
                 android:fontFamily="@font/inter"
                 android:text="@string/name"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/edittext_name"
@@ -99,7 +99,7 @@
             <TextView
                 android:id="@+id/phone_number"
                 android:layout_width="0dp"
-                android:layout_height="27dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -108,7 +108,7 @@
                 android:fontFamily="@font/inter"
                 android:text="@string/phone_number"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/edittext_phone_number"
@@ -137,7 +137,7 @@
             <TextView
                 android:id="@+id/password"
                 android:layout_width="0dp"
-                android:layout_height="27dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -146,7 +146,7 @@
                 android:fontFamily="@font/inter"
                 android:text="@string/password"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/edittext_old_password"

@@ -9,15 +9,15 @@
     <!-- Auto layout, variables, and unit scale are not yet supported -->
     <TextView
         android:id="@+id/text_trans_number"
-        android:layout_width="79dp"
-        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="17dp"
         android:text="@string/vihicle_number"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:gravity="top"
         android:fontFamily="@font/inter"
         />
@@ -49,10 +49,10 @@
         android:fontFamily="@font/kopubdotumbold"
         android:gravity="center|start"
         android:paddingStart="31dp"
-        android:paddingEnd="45dp"
+        android:paddingEnd="30dp"
         android:text="@string/regist_trans"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="35sp"
         android:drawableEnd="@drawable/home_image_truck"
         android:drawableTint="@color/white"/>
 
@@ -71,11 +71,11 @@
 
         android:fontFamily="@font/kopubdotumbold"
         android:gravity="center|end"
-        android:paddingStart="45dp"
+        android:paddingStart="30dp"
         android:paddingEnd="31dp"
         android:text="@string/list_trans"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="35sp"
         android:drawableStart="@drawable/home_image_calender"
         android:drawableTint="@color/white"/>
 
@@ -97,7 +97,7 @@
             android:background="@drawable/home_button_edit_profile"
             android:elevation="2dp"
             android:text="@string/edit_profile"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="#75BCFF"
             android:fontFamily="@font/kopubdotumbold"
             />
@@ -113,7 +113,7 @@
             android:background="@drawable/home_button_logout"
             android:elevation="2dp"
             android:text="@string/logout"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="#A9BBFB"
             android:fontFamily="@font/kopubdotumbold"
             />

@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EditTrans extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class EditTrans extends AppCompatActivity {
     ImageButton bt_back;
     String[] arr_From, arr_To, arr_Product;
 
-    String choiced_from, choiced_to, choiced_product, entered_quantity;
+    String choiced_from, choiced_to, choiced_product, entered_quantity, vihiclenumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class EditTrans extends AppCompatActivity {
         String db_start = bundle.getString("start");
         String db_end = bundle.getString("end");
         String db_quantity = bundle.getString("quantity");
+        vihiclenumber = db_vihiclenumber;
 
         //xml과 연결하기
         sp_from = findViewById(R.id.spinner_from);
@@ -70,7 +72,10 @@ public class EditTrans extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(EditTrans.this, ListTrans.class);
+                intent.putExtra("vihicle_number", vihiclenumber);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
@@ -254,8 +259,16 @@ public class EditTrans extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
+    public void onBackPressed() { //뒤로가기 누를 시 이전페이지로
+        Intent intent = new Intent(EditTrans.this, ListTrans.class);
+        intent.putExtra("vihicle_number", vihiclenumber);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
     private void printToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }

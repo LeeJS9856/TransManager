@@ -50,7 +50,10 @@ public class ListTrans extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(ListTrans.this, Home.class);
+                intent.putExtra("vihicle_number", vihicle_number);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
@@ -170,5 +173,12 @@ public class ListTrans extends AppCompatActivity {
         DataRequest dataRequest = new DataRequest(year, month, vihicle_number, dataResponseListener);
         RequestQueue DataQueue = Volley.newRequestQueue(ListTrans.this);
         DataQueue.add(dataRequest);
+    }
+
+    public void onBackPressed() { //뒤로가기 누를 시 이전페이지로
+        Intent intent = new Intent(ListTrans.this, Home.class);
+        intent.putExtra("vihicle_number", vihicle_number);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
