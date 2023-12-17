@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class RegistTrans extends AppCompatActivity {
     String[] arr_From, arr_To, arr_Product;
 
     String choiced_from, choiced_to, choiced_product, entered_quantity;
+    private long mLastClickTime = 0; //중복 클릭 방지
 
 
 
@@ -204,8 +206,15 @@ public class RegistTrans extends AppCompatActivity {
 
         //등록버튼 이벤트 처리하기
         bt_regist_trans.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
+                //중복 클릭 방지
+                if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 //오늘날짜 구하기
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);

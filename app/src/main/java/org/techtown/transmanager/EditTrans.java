@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,6 +41,7 @@ public class EditTrans extends AppCompatActivity {
     String[] arr_From, arr_To, arr_Product;
 
     String choiced_from, choiced_to, choiced_product, entered_quantity, vihiclenumber;
+    private long mLastClickTime = 0; //중복 클릭 방지
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,6 +237,11 @@ public class EditTrans extends AppCompatActivity {
         bt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //중복 클릭 방지
+                if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 //수량 입력받기
                 entered_quantity = ed_quantity.getText().toString();
 
