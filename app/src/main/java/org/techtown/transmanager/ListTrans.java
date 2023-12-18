@@ -33,8 +33,8 @@ public class ListTrans extends AppCompatActivity {
     String[] arr_month = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     String vihicle_number, choiced_year, choiced_month;
     ImageButton bt_back;
+    RecyclerView recyclerView;
     static ArrayList<TransData> data = new ArrayList<>();
-    private long time = System.currentTimeMillis();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,7 @@ public class ListTrans extends AppCompatActivity {
         }
 
         //리사이클러뷰 정의하기
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         TransDataAdapter transDataAdapter = new TransDataAdapter(ListTrans.this);
 
         //스피너 처리하기
@@ -156,13 +156,14 @@ public class ListTrans extends AppCompatActivity {
                     int length = jsonArray.length();
                     for(int i=0;i<length;i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
+                        int id = item.getInt("id");
                         String day = item.getString("day");
                         String product = item.getString("product");
                         String start = item.getString("start");
                         String end = item.getString("end");
                         String quantity = item.getString("quantity");
 
-                        TransData transData = new TransData(year, month, day, vihicle_number, product, start, end, quantity);
+                        TransData transData = new TransData(id, year, month, day, vihicle_number, product, start, end, quantity);
                         data.add(transData);
                     }
                 } catch (JSONException e) {

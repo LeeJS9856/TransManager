@@ -2,9 +2,11 @@ package org.techtown.transmanager;
 
 public class TransData {
     private String year, month, day, vihiclenumber, product, start, end, quantity;
+    private int id;
 
-    public TransData(String year, String month, String day, String vihiclenumber, String product,
+    public TransData(int id, String year, String month, String day, String vihiclenumber, String product,
                      String start, String end, String quantity) {
+        this.id = id;
         this.year = year;
         this.month = month;
         this.day = day;
@@ -13,6 +15,14 @@ public class TransData {
         this.start = start;
         this.end = end;
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getYear() {

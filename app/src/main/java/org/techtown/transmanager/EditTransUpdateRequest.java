@@ -13,11 +13,12 @@ public class EditTransUpdateRequest extends StringRequest {
     final static private String URL = "http://gm8668.dothome.co.kr/requestUpdateTrans.php";
     private Map<String, String> map;
 
-    public EditTransUpdateRequest(String year, String month, String day, String vihiclenumber,
+    public EditTransUpdateRequest(String id, String year, String month, String day, String vihiclenumber,
                                   String product, String start, String end, String quantity, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
 
         map = new HashMap<>();
+        map.put("id", id);
         map.put("year", year);
         map.put("month", month);
         map.put("day", day);

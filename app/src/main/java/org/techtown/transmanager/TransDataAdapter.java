@@ -90,6 +90,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int id = dataSet.get(position).getId();
                 String year = dataSet.get(position).getYear();
                 String month = dataSet.get(position).getMonth();
                 String day = dataSet.get(position).getDay();
@@ -100,6 +101,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 String quantity = dataSet.get(position).getQuantity();
 
                 Intent intent = new Intent(context, EditTrans.class);
+                intent.putExtra("id", id);
                 intent.putExtra("year", year);
                 intent.putExtra("month", month);
                 intent.putExtra("day", day);
@@ -127,6 +129,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
 
                             }
                         };
+                        String id = Integer.toString(dataSet.get(position).getId());
                         String year = dataSet.get(position).getYear();
                         String month = dataSet.get(position).getMonth();
                         String day = dataSet.get(position).getDay();
@@ -135,7 +138,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                         String start = dataSet.get(position).getStart();
                         String end = dataSet.get(position).getEnd();
                         String quantity = dataSet.get(position).getQuantity();
-                        ListTransDeleteRequest deleteRequest = new ListTransDeleteRequest(year, month, day, vihiclenumber, product, start, end, quantity,deleteResponseListener);
+                        ListTransDeleteRequest deleteRequest = new ListTransDeleteRequest(id, year, month, day, vihiclenumber, product, start, end, quantity,deleteResponseListener);
                         RequestQueue Queue = Volley.newRequestQueue(view.getContext());
                         Queue.add(deleteRequest);
 

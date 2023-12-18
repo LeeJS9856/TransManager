@@ -50,6 +50,7 @@ public class EditTrans extends AppCompatActivity {
         //번들에서 값 받아오기
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        int db_id = bundle.getInt("id");
         String db_year = bundle.getString("year");
         String db_month = bundle.getString("month");
         String db_day = bundle.getString("day");
@@ -258,8 +259,10 @@ public class EditTrans extends AppCompatActivity {
                             startActivity(intent);
                         }
                     };
+
+                    String id = Integer.toString(db_id);
                     EditTransUpdateRequest editTransUpdateRequest =
-                            new EditTransUpdateRequest(db_year, db_month, db_day, db_vihiclenumber,
+                            new EditTransUpdateRequest(id, db_year, db_month, db_day, db_vihiclenumber,
                                     choiced_product, choiced_from, choiced_to, entered_quantity, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(EditTrans.this);
                     queue.add(editTransUpdateRequest);
