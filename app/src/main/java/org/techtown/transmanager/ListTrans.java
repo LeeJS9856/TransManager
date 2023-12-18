@@ -110,6 +110,7 @@ public class ListTrans extends AppCompatActivity {
                     public void run() {
                         transDataAdapter.submitData(getData());
                         recyclerView.setAdapter(transDataAdapter);
+                        recyclerView.scrollToPosition(data.size()-1);
                     }
                 }, 1000);
             }
@@ -125,12 +126,15 @@ public class ListTrans extends AppCompatActivity {
                 choiced_month = arr_month[i];
                 data.clear();
                 getTransData(choiced_year, choiced_month);
+
                 //비동기적으로 작동하는 onresponse메서드를 위해 딜레이시켜서 리사이클러뷰 실행
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         transDataAdapter.submitData(getData());
                         recyclerView.setAdapter(transDataAdapter);
+                        recyclerView.scrollToPosition(data.size()-1);
+
                     }
                 }, 1000);
             }
@@ -140,6 +144,7 @@ public class ListTrans extends AppCompatActivity {
 
             }
         });
+
     }
     private ArrayList<TransData> getData() {
         return data;
