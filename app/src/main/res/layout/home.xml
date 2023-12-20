@@ -37,7 +37,7 @@
     <android.widget.Button
         android:id="@+id/button_regist_trans"
         android:layout_width="match_parent"
-        android:layout_height="158dp"
+        android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
@@ -59,25 +59,47 @@
     <android.widget.Button
         android:id="@+id/button_list_trans"
         android:layout_width="match_parent"
-        android:layout_height="158dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="130dp"
+        android:layout_below ="@id/button_regist_trans"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/home_button_regist_trans"
-        android:backgroundTint="#96CBFD"
+        android:backgroundTint="#6BB7FF"
         android:elevation="2dp"
 
         android:fontFamily="@font/kopubdotumbold"
-        android:gravity="center|end"
+        android:gravity="center|start"
         android:paddingStart="30dp"
-        android:paddingEnd="31dp"
+        android:paddingEnd="40dp"
         android:text="@string/list_trans"
         android:textColor="@color/white"
         android:textSize="35sp"
-        android:drawableStart="@drawable/home_image_calender"
+        android:drawableEnd="@drawable/home_image_calender"
         android:drawableTint="@color/white"/>
+
+    <android.widget.Button
+        android:id="@+id/button_received_request"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/button_list_trans"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/home_button_regist_trans"
+        android:backgroundTint="#98CEFF"
+        android:elevation="2dp"
+
+        android:fontFamily="@font/kopubdotumbold"
+        android:gravity="center|start"
+        android:paddingStart="30dp"
+        android:paddingEnd="31dp"
+        android:text="@string/received_request"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:drawableEnd="@drawable/home_image_receive" />
 
     <LinearLayout
         android:layout_width="match_parent"
