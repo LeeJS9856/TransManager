@@ -7,15 +7,13 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ToRequest extends StringRequest {
+public class MapRequest extends StringRequest {
 
-    final static private String URL = "http://gm8668.dothome.co.kr/requestTo.php";
+    final static private String URL = "http://gm8668.dothome.co.kr/requestMap.php";
     private Map<String, String> map;
 
-    public ToRequest(Response.Listener<String> listener) {
+    public MapRequest(Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
-
-        map = new HashMap<>();
     }
 
     protected Map<String, String> getParams() throws AuthFailureError {

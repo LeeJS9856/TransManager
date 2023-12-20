@@ -13,7 +13,7 @@ public class RegistTransRequest extends StringRequest {
     private Map<String, String> map;
 
     public RegistTransRequest(String year, String month, String day, String vihiclenumber
-            ,String product, String start, String end, String quantity, Response.Listener<String> listener) {
+            ,String product, String start, String end, String quantity, String agency, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
@@ -25,6 +25,7 @@ public class RegistTransRequest extends StringRequest {
         map.put("start", start);
         map.put("end", end);
         map.put("quantity", quantity);
+        map.put("agency", agency);
 
     }
 

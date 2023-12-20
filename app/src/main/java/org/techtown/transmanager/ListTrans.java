@@ -167,8 +167,9 @@ public class ListTrans extends AppCompatActivity {
                         String start = item.getString("start");
                         String end = item.getString("end");
                         String quantity = item.getString("quantity");
+                        String agency = item.getString("agency");
 
-                        TransData transData = new TransData(id, year, month, day, vihicle_number, product, start, end, quantity);
+                        TransData transData = new TransData(id, year, month, day, vihicle_number, product, start, end, quantity, agency);
                         data.add(transData);
                     }
                 } catch (JSONException e) {

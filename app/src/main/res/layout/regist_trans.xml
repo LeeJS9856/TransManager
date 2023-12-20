@@ -59,6 +59,40 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/text_agency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:text="@string/agency"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinner_agency"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="5"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginBottom="9dp"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:background="@drawable/regist_vihivle_edit_text"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/text_from"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

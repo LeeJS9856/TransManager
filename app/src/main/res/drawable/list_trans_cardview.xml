@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- drawable/rectangle_1.xml -->
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="360dp"
-    android:height="55dp"
+    android:width="325dp"
+    android:height="81.95dp"
     android:viewportWidth="325"
-    android:viewportHeight="41"
+    android:viewportHeight="81.95"
     >
     <group>
         <clip-path
-            android:pathData="M16 0H309C317.837 0 325 7.16344 325 16V25C325 33.8366 317.837 41 309 41H16C7.16344 41 0 33.8366 0 25V16C0 7.16344 7.16344 0 16 0Z"
+            android:pathData="M16 0H309C317.837 0 325 7.16344 325 16V65.9512C325 74.7877 317.837 81.9512 309 81.9512H16C7.16344 81.9512 0 74.7877 0 65.9512V16C0 7.16344 7.16344 0 16 0Z"
             />
         <path
-            android:pathData="M0 0V41H325V0"
+            android:pathData="M0 0V81.9512H325V0"
             android:fillColor="#FFFFFF"
             />
         <path
-            android:pathData="M16 0H309C317.837 0 325 7.16344 325 16V25C325 33.8366 317.837 41 309 41H16C7.16344 41 0 33.8366 0 25V16C0 7.16344 7.16344 0 16 0Z"
+            android:pathData="M16 0H309C317.837 0 325 7.16344 325 16V65.9512C325 74.7877 317.837 81.9512 309 81.9512H16C7.16344 81.9512 0 74.7877 0 65.9512V16C0 7.16344 7.16344 0 16 0Z"
             android:strokeWidth="8"
             android:strokeColor="#B4C4FF"
             />

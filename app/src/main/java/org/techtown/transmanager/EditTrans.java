@@ -23,10 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,13 +36,17 @@ import java.util.Map;
 
 public class EditTrans extends AppCompatActivity {
 
-    Spinner sp_from, sp_to, sp_product;
+    Spinner sp_from, sp_to, sp_product, sp_agency;
     EditText ed_quantity;
     android.widget.Button bt_edit;
     ImageButton bt_back;
-    String[] arr_From, arr_To, arr_Product;
+    String[] arr_From, arr_To, arr_Product, arr_Agency;
+    ArrayList<String> list_from = new ArrayList<>();
+    ArrayList<String> list_to = new ArrayList<>();
+    ArrayList<String> list_product = new ArrayList<>();
+    ArrayList<String> list_agency = new ArrayList<>();
 
-    String choiced_from, choiced_to, choiced_product, entered_quantity, vihiclenumber;
+    String choiced_from, choiced_to, choiced_product, entered_quantity, vihiclenumber, choiced_agency;
     private long mLastClickTime = 0; //중복 클릭 방지
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class EditTrans extends AppCompatActivity {
         sp_from = findViewById(R.id.spinner_from);
         sp_to = findViewById(R.id.spinner_to);
         sp_product = findViewById(R.id.spinner_product);
-
+        sp_agency = findViewById(R.id.spinner_agency);
         ed_quantity = findViewById(R.id.edittext_quantity);
 
         bt_edit = findViewById(R.id.button_edit_trans);
@@ -85,82 +91,50 @@ public class EditTrans extends AppCompatActivity {
         //수량 초기값 설정
         ed_quantity.setText(db_quantity);
 
-        //출발지 데이터 가져와서 배열에 집어넣기
-        Response.Listener<String> fromResponseListener = new Response.Listener<String>() {
-            public void onResponse(String response) {
-                try{
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if(success) {
-                        int length = jsonResponse.length()-1;
-                        arr_From = new String[length];
-                        for(int i=0;i<length;i++) {
-                            String db = jsonResponse.getString(String.valueOf(i));
-                            arr_From[i] = db;
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        FromRequest  fromRequest = new FromRequest(fromResponseListener);
-        RequestQueue FromQueue = Volley.newRequestQueue(EditTrans.this);
-        FromQueue.add(fromRequest);
-
-        //도착지 데이터 가져와서 배열에 집어넣기
-        Response.Listener<String> toResponseListener = new Response.Listener<String>() {
+        Response.Listener<String> mapResponseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if(success) {
-                        int length = jsonResponse.length()-1;
-                        arr_To = new String[length];
-                        for(int i=0;i<length;i++) {
-                            String db = jsonResponse.getString(String.valueOf(i));
-                            arr_To[i] = db;
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ToRequest toRequest = new ToRequest(toResponseListener);
-        RequestQueue ToQueue = Volley.newRequestQueue(EditTrans.this);
-        ToQueue.add(toRequest);
+                    JSONArray jsonArray = new JSONArray(response);
+                    int length = jsonArray.length()-1;
+                    for(int i=0;i<length;i++) {
+                        JSONObject item = jsonArray.getJSONObject(i);
+                        String property = item.getString("property");
+                        String name = item.getString("name");
 
-        //제품 데이터 가져와서 배열에 집어넣기
-        Response.Listener<String> productResponseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try{
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if(success) {
-                        int length = jsonResponse.length()-1;
-                        arr_Product = new String[length];
-                        for(int i=0;i<length;i++) {
-                            String db = jsonResponse.getString(String.valueOf(i));
-                            arr_Product[i] = db;
+                        if(property.equals("출발지")) {
+                            list_from.add(name);
                         }
+                        else if(property.equals("도착지")) {
+                            list_to.add(name);
+                        }
+                        else if(property.equals("제품")) {
+                            list_product.add(name);
+                        }
+                        else if(property.equals("대리점")) {
+                            list_agency.add(name);
+                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
-        ProductRequest productRequest = new ProductRequest(productResponseListener);
-        RequestQueue ProductQueue = Volley.newRequestQueue(EditTrans.this);
-        ProductQueue.add(productRequest);
+        MapRequest mapRequest = new MapRequest(mapResponseListener);
+        RequestQueue MapQueue = Volley.newRequestQueue(EditTrans.this);
+        MapQueue.add(mapRequest);
 
 
         //비동기적으로 작동하는 onresponse메서드를 위해 딜레이시켜서 배열 가져오기
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //리스트를 배열에 집어넣기
+                arr_From = list_from.toArray(new String[list_from.size()]);
+                arr_To = list_to.toArray(new String[list_to.size()]);
+                arr_Product = list_product.toArray(new String[list_product.size()]);
+                arr_Agency = list_agency.toArray(new String[list_agency.size()]);
 
                 //스피너 적용하기
                 ArrayAdapter<String> fromAdapter = new ArrayAdapter<>(
@@ -169,15 +143,20 @@ public class EditTrans extends AppCompatActivity {
                         EditTrans.this, android.R.layout.simple_spinner_item, arr_To);
                 ArrayAdapter<String> productAdapter = new ArrayAdapter<>(
                         EditTrans.this, android.R.layout.simple_spinner_item, arr_Product);
+                ArrayAdapter<String> agencyAdapter = new ArrayAdapter<>(
+                        EditTrans.this, android.R.layout.simple_spinner_item, arr_Agency);
                 fromAdapter.setDropDownViewResource(
                         android.R.layout.simple_spinner_dropdown_item);
                 toAdapter.setDropDownViewResource(
                         android.R.layout.simple_spinner_dropdown_item);
                 productAdapter.setDropDownViewResource(
                         android.R.layout.simple_spinner_dropdown_item);
+                agencyAdapter.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item);
                 sp_from.setAdapter(fromAdapter);
                 sp_to.setAdapter(toAdapter);
                 sp_product.setAdapter(productAdapter);
+                sp_agency.setAdapter(agencyAdapter);
 
                 //초기값 설정
                 for(int i=0;i<arr_From.length;i++) {
@@ -224,6 +203,18 @@ public class EditTrans extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         choiced_product = arr_Product[i];
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                sp_agency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        choiced_agency = arr_Agency[i];
                     }
 
                     @Override
