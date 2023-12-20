@@ -71,13 +71,27 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
 
         private void bindChangeDate(TransData item) {
             TextView date = itemView.findViewById(R.id.text_date);
-            TextView data = itemView.findViewById(R.id.text_data);
+            TextView trans = itemView.findViewById(R.id.text_trans);
+            TextView product = itemView.findViewById(R.id.text_product);
+            TextView agency = itemView.findViewById(R.id.text_agency);
+            TextView quantity = itemView.findViewById(R.id.text_quantity);
+
             date.setText(item.getMonth()+"."+item.getDay());
-            data.setText(item.getProduct()+" / "+item.getStart()+" / "+item.getEnd()+" / "+item.getQuantity());
+            trans.setText(item.getStart()+" - "+item.getEnd());
+            product.setText(item.getProduct());
+            agency.setText(item.getAgency());
+            quantity.setText(item.getQuantity());
+
         }
         private void bindUnChangedDate(TransData item) {
-            TextView data = itemView.findViewById(R.id.text_data);
-            data.setText(item.getProduct()+" / "+item.getStart()+" / "+item.getEnd()+" / "+item.getQuantity());
+            TextView trans = itemView.findViewById(R.id.text_trans);
+            TextView product = itemView.findViewById(R.id.text_product);
+            TextView agency = itemView.findViewById(R.id.text_agency);
+            TextView quantity = itemView.findViewById(R.id.text_quantity);
+            trans.setText(item.getStart()+" - "+item.getEnd());
+            product.setText(item.getProduct());
+            agency.setText(item.getAgency());
+            quantity.setText(item.getQuantity());
         }
 
 
@@ -99,6 +113,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 String start = dataSet.get(position).getStart();
                 String end = dataSet.get(position).getEnd();
                 String quantity = dataSet.get(position).getQuantity();
+                String agency = dataSet.get(position).getAgency();
 
                 Intent intent = new Intent(context, EditTrans.class);
                 intent.putExtra("id", id);
@@ -110,6 +125,7 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                 intent.putExtra("start", start);
                 intent.putExtra("end", end);
                 intent.putExtra("quantity", quantity);
+                intent.putExtra("agency", agency);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(intent);
             }
@@ -138,7 +154,8 @@ public class TransDataAdapter extends RecyclerView.Adapter<TransDataAdapter.View
                         String start = dataSet.get(position).getStart();
                         String end = dataSet.get(position).getEnd();
                         String quantity = dataSet.get(position).getQuantity();
-                        ListTransDeleteRequest deleteRequest = new ListTransDeleteRequest(id, year, month, day, vihiclenumber, product, start, end, quantity,deleteResponseListener);
+                        String agency = dataSet.get(position).getAgency();
+                        ListTransDeleteRequest deleteRequest = new ListTransDeleteRequest(id, year, month, day, vihiclenumber, product, start, end, quantity, agency, deleteResponseListener);
                         RequestQueue Queue = Volley.newRequestQueue(view.getContext());
                         Queue.add(deleteRequest);
 

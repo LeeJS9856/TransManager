@@ -33,4 +33,5 @@
     <string name="edit_trans">운송 수정</string>
     <string name="auto_login">로그인 정보 기억</string>
     <string name="agency">대리점</string>
+    <string name="received_request">받은 요청</string>
 </resources>

@@ -65,6 +65,7 @@ public class EditTrans extends AppCompatActivity {
         String db_start = bundle.getString("start");
         String db_end = bundle.getString("end");
         String db_quantity = bundle.getString("quantity");
+        String db_agency = bundle.getString("agency");
         vihiclenumber = db_vihiclenumber;
 
         //xml과 연결하기
@@ -174,6 +175,11 @@ public class EditTrans extends AppCompatActivity {
                         sp_product.setSelection(i);
                     }
                 }
+                for(int i=0;i<arr_Agency.length;i++) {
+                    if(arr_Agency[i].equals(db_agency)) {
+                        sp_agency.setSelection(i);
+                    }
+                }
 
                 sp_from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -254,7 +260,7 @@ public class EditTrans extends AppCompatActivity {
                     String id = Integer.toString(db_id);
                     EditTransUpdateRequest editTransUpdateRequest =
                             new EditTransUpdateRequest(id, db_year, db_month, db_day, db_vihiclenumber,
-                                    choiced_product, choiced_from, choiced_to, entered_quantity, responseListener);
+                                    choiced_product, choiced_from, choiced_to, entered_quantity, choiced_agency, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(EditTrans.this);
                     queue.add(editTransUpdateRequest);
                 }
