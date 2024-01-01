@@ -4,6 +4,7 @@ package org.techtown.transmanager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.EditText;
@@ -42,10 +43,9 @@ public class RegistVihicle extends AppCompatActivity {
         setContentView(R.layout.regist_vihicle);
 
 
-
         //뒤로가기 버튼
         back = findViewById(R.id.back);
-        back.setOnClickListener(v->onBackPressed() );
+        back.setOnClickListener(v -> onBackPressed());
 
         //기입 항목
         ed_name = findViewById(R.id.edittext_name);
@@ -56,7 +56,7 @@ public class RegistVihicle extends AppCompatActivity {
 
         //등록 요청 버튼
         regist_request = findViewById(R.id.button_regist_request);
-        regist_request.setOnClickListener(v-> {
+        regist_request.setOnClickListener(v -> {
 
             String name = ed_name.getText().toString();
             String vihicle_number = ed_vihicle_number.getText().toString();
@@ -65,17 +65,16 @@ public class RegistVihicle extends AppCompatActivity {
             String password_check = ed_password_check.getText().toString();
 
 
-
             //차량번호 중복 확인
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    try{
+                    try {
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
-                        if(!success) {
+                        if (!success) {
                             validate = false;
-                        }else {
+                        } else {
                             validate = true;
                         }
                     } catch (JSONException e) {
@@ -88,53 +87,52 @@ public class RegistVihicle extends AppCompatActivity {
             queue.add(validateRequest);
 
             //중복 클릭 방지
-            if(SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
-            if(name.isEmpty()) { //이름 입력이 안 되었을 때
-                printToast("이름을 입력해주세요.");
-            }
-            else if(vihicle_number.isEmpty()) { //차량번호 입력이 안 되었을 때
-                printToast("차량번호를 입력해주세요.");
-            }
-            else if(!validate) {
-                printToast("존재하는 차량번호입니다.");
-            }
-            else if(phone_number.isEmpty()) { //핸드폰 번호 입력이 안 되었을 때
-                printToast("핸드폰 번호를 입력해주세요.");
-            }
-            else if(password.isEmpty()) {//비밀번호 입력이 안 되었을 때
-                printToast("비밀번호를 입력해주세요.");
-            }
-            else if(!password.equals(password_check)) {
-                printToast("비밀번호 재입력이 일치하지 않습니다."); //비밀번호 확인이 비밀번호와 다를 때
-            }
-            else {
-                Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if(success && validate) {
-                                Intent intent = new Intent(RegistVihicle.this, Login.class);
-                                startActivity(intent);
-                                printToast("등록 요청 되었습니다.");
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (name.isEmpty()) { //이름 입력이 안 되었을 때
+                        printToast("이름을 입력해주세요.");
+                    } else if (vihicle_number.isEmpty()) { //차량번호 입력이 안 되었을 때
+                        printToast("차량번호를 입력해주세요.");
+                    } else if (!validate) {
+                        printToast("존재하는 차량번호입니다.");
+                    } else if (phone_number.isEmpty()) { //핸드폰 번호 입력이 안 되었을 때
+                        printToast("핸드폰 번호를 입력해주세요.");
+                    } else if (password.isEmpty()) {//비밀번호 입력이 안 되었을 때
+                        printToast("비밀번호를 입력해주세요.");
+                    } else if (!password.equals(password_check)) {
+                        printToast("비밀번호 재입력이 일치하지 않습니다."); //비밀번호 확인이 비밀번호와 다를 때
+                    } else {
+                        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if (success && validate) {
+                                        Intent intent = new Intent(RegistVihicle.this, Login.class);
+                                        startActivity(intent);
+                                        printToast("등록 요청 되었습니다.");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        };
+                        RegistRequest registRequest = new RegistRequest(name, vihicle_number, phone_number, password, responseListener2);
+                        RequestQueue queue2 = Volley.newRequestQueue(RegistVihicle.this);
+                        queue2.add(registRequest);
                     }
-                };
-                RegistRequest registRequest = new RegistRequest(name, vihicle_number, phone_number, password, responseListener2);
-                RequestQueue queue2 = Volley.newRequestQueue(RegistVihicle.this);
-                queue2.add(registRequest);
-            }
+                }
+            }, 1000);
         });
     }
-
-
 
 
     private void printToast(String text) {

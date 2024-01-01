@@ -1,145 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Auto layout, variables, and unit scale are not yet supported -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <TextView
-        android:id="@+id/text_trans_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:text="@string/vihicle_number"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:gravity="top"
-        android:fontFamily="@font/inter"
-        />
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <View
-        android:id="@+id/line_head"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/home_line_head"
-        />
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <android.widget.Button
-        android:id="@+id/button_regist_trans"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/home_button_regist_trans"
-        android:elevation="2dp"
-
-        android:fontFamily="@font/kopubdotumbold"
-        android:gravity="center|start"
-        android:paddingStart="31dp"
-        android:paddingEnd="30dp"
-        android:text="@string/regist_trans"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:drawableEnd="@drawable/home_image_truck"
-        android:drawableTint="@color/white"/>
-
-    <android.widget.Button
-        android:id="@+id/button_list_trans"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_below ="@id/button_regist_trans"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/home_button_regist_trans"
-        android:backgroundTint="#6BB7FF"
-        android:elevation="2dp"
-
-        android:fontFamily="@font/kopubdotumbold"
-        android:gravity="center|start"
-        android:paddingStart="30dp"
-        android:paddingEnd="40dp"
-        android:text="@string/list_trans"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:drawableEnd="@drawable/home_image_calender"
-        android:drawableTint="@color/white"/>
-
-    <android.widget.Button
-        android:id="@+id/button_received_request"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_below="@id/button_list_trans"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/home_button_regist_trans"
-        android:backgroundTint="#98CEFF"
-        android:elevation="2dp"
-
-        android:fontFamily="@font/kopubdotumbold"
-        android:gravity="center|start"
-        android:paddingStart="30dp"
-        android:paddingEnd="31dp"
-        android:text="@string/received_request"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:drawableEnd="@drawable/home_image_receive" />
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp">
-
-        <android.widget.Button
-            android:id="@+id/button_edit_profile"
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="63dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="9dp"
-            android:background="@drawable/home_button_edit_profile"
-            android:elevation="2dp"
-            android:text="@string/edit_profile"
-            android:textSize="18sp"
-            android:textColor="#75BCFF"
-            android:fontFamily="@font/kopubdotumbold"
-            />
+            android:orientation="vertical" />
 
-        <!-- Auto layout, variables, and unit scale are not yet supported -->
-        <android.widget.Button
-            android:id="@+id/button_logout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="63dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/home_button_logout"
-            android:elevation="2dp"
-            android:text="@string/logout"
-            android:textSize="18sp"
-            android:textColor="#A9BBFB"
+        <TextView
+            android:id="@+id/text_trans_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/kopubdotumbold"
-            />
+            android:gravity="center"
+            android:text="@string/vihicle_number"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/home_line_head" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9.7"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="14"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="horizontal">
+                <android.widget.Button
+                    android:id="@+id/button_regist_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/home_button_regist_trans"
+                    android:elevation="2dp"
+
+                    android:fontFamily="@font/kopubdotumbold"
+                    android:gravity="center|start"
+                    android:paddingStart="31dp"
+                    android:paddingEnd="30dp"
+                    android:text="@string/regist_trans"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    android:drawableEnd="@drawable/home_image_truck"
+                    android:drawableTint="@color/white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="horizontal">
+                <android.widget.Button
+                    android:id="@+id/button_list_trans"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/home_button_regist_trans"
+                    android:backgroundTint="#6BB7FF"
+                    android:elevation="2dp"
+
+                    android:fontFamily="@font/kopubdotumbold"
+                    android:gravity="center|start"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="40dp"
+                    android:text="@string/list_trans"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:drawableEnd="@drawable/home_image_calender"
+                    android:drawableTint="@color/white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="horizontal">
+                <android.widget.Button
+                    android:id="@+id/button_received_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/home_button_regist_trans"
+                    android:backgroundTint="#98CEFF"
+                    android:elevation="2dp"
+
+                    android:fontFamily="@font/kopubdotumbold"
+                    android:gravity="center|start"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="31dp"
+                    android:text="@string/received_request"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:drawableEnd="@drawable/home_image_receive" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
+            <android.widget.Button
+                android:id="@+id/button_edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/home_button_edit_profile"
+                android:elevation="2dp"
+                android:text="@string/edit_profile"
+                android:textSize="18dp"
+                android:textColor="#75BCFF"
+                android:fontFamily="@font/kopubdotumbold"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
+            <android.widget.Button
+                android:id="@+id/button_logout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/home_button_logout"
+                android:elevation="2dp"
+                android:text="@string/logout"
+                android:textSize="18dp"
+                android:textColor="#A9BBFB"
+                android:fontFamily="@font/kopubdotumbold"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"/>
+
+</LinearLayout>
