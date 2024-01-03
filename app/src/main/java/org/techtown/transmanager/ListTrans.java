@@ -69,7 +69,7 @@ public class ListTrans extends AppCompatActivity {
         int n = Integer.parseInt(today[0]) - 2023;
         arr_year = new String[n+1];
         for(int i=0;i<n+1;i++) {
-            int m = 2023 + n;
+            int m = 2023 + i;
             arr_year[i] = Integer.toString(m); //2023년~현재 연도 배열에 집어넣기
         }
 
