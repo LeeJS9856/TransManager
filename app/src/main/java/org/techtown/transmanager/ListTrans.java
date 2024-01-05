@@ -30,7 +30,7 @@ public class ListTrans extends AppCompatActivity {
     Spinner spinner_year, spinner_month;
     String[] today, arr_year;
 
-    String[] arr_month = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+    String[] arr_month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String vihicle_number, choiced_year, choiced_month;
     ImageButton bt_back;
     RecyclerView recyclerView;
