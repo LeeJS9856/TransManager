@@ -1,5 +1,6 @@
 package org.techtown.transmanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -7,11 +8,19 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
+import android.service.controls.ControlsProviderService;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -96,6 +105,10 @@ public class Home extends AppCompatActivity {
                 Toast.makeText(Home.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent intent = new Intent(getApplicationContext(), MyService.class);
+        intent.putExtra("vihiclenumber", vihiclenumber);
+        startService(intent);
 
     }
 
