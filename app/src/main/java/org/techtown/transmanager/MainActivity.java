@@ -1,9 +1,14 @@
 package org.techtown.transmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -27,10 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
     String vihiclenumber, password;
     Context context = MainActivity.this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auto_login();
 
+    }
+
+    protected void auto_login() {
         Map<String, String> LoginInfo = SharedPreferencesManager.getLoginInfo(this);
         if(!LoginInfo.isEmpty()) {
             vihiclenumber = LoginInfo.get("vihiclenumber");
@@ -72,13 +82,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-
-
-
-
-
     }
-
 
 
 

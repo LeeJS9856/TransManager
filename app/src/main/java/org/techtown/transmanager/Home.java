@@ -1,10 +1,16 @@
 package org.techtown.transmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +21,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Home extends AppCompatActivity {
 
     TextView text_vihicle_number;
     android.widget.Button regist_trans, list_trans, edit_profile, logout;
     private long backKeyPressedTime = 0;
+
+    Context context = Home.this;
+    String vihiclenumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +45,7 @@ public class Home extends AppCompatActivity {
         //번들에서 값 받아오기
         Intent intent_bundle = getIntent();
         Bundle bundle = intent_bundle.getExtras();
-        String vihicle_number = bundle.getString("vihicle_number");
+        vihiclenumber = bundle.getString("vihicle_number");
 
         //텍스트뷰, 버튼 정의
         text_vihicle_number = findViewById(R.id.text_trans_number);
@@ -45,12 +57,12 @@ public class Home extends AppCompatActivity {
 
 
         //상단 차량번호 바꾸기
-        text_vihicle_number.setText(vihicle_number);
+        text_vihicle_number.setText(vihiclenumber);
 
         //운송등록 클릭 이벤트
         regist_trans.setOnClickListener(v -> {
             Intent intent = new Intent(Home.this, RegistTrans.class);
-            intent.putExtra("vihicle_number", vihicle_number);
+            intent.putExtra("vihicle_number", vihiclenumber);
             startActivity(intent);
         });
 
@@ -59,7 +71,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, ListTrans.class);
-                intent.putExtra("vihicle_number", vihicle_number);
+                intent.putExtra("vihicle_number", vihiclenumber);
                 startActivity(intent);
             }
         });
@@ -69,7 +81,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, EditProfile.class);
-                intent.putExtra("vihicle_number", vihicle_number);
+                intent.putExtra("vihicle_number", vihiclenumber);
                 startActivity(intent);
             }
         });
@@ -95,7 +107,7 @@ public class Home extends AppCompatActivity {
         } else {
             finish();
         }
-
-
     }
+
+
 }
