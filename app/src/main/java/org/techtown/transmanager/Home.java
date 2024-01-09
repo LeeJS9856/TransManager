@@ -41,7 +41,7 @@ import java.util.Date;
 public class Home extends AppCompatActivity {
 
     TextView text_vihicle_number;
-    android.widget.Button regist_trans, list_trans, edit_profile, logout;
+    android.widget.Button regist_trans, list_trans, edit_profile, logout, dispatch;
     private long backKeyPressedTime = 0;
 
     Context context = Home.this;
@@ -62,6 +62,7 @@ public class Home extends AppCompatActivity {
         list_trans = findViewById(R.id.button_list_trans);
         edit_profile = findViewById(R.id.button_edit_profile);
         logout = findViewById(R.id.button_logout);
+        dispatch = findViewById(R.id.button_received_request);
 
 
 
@@ -110,7 +111,18 @@ public class Home extends AppCompatActivity {
         intent.putExtra("vihiclenumber", vihiclenumber);
         startService(intent);
 
+
+        dispatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, Dispatch.class);
+                intent.putExtra("vihiclenumber", vihiclenumber);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     public void onBackPressed() { //뒤로가기 두번 누를시 앱 종료
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {

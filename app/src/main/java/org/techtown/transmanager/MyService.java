@@ -60,14 +60,17 @@ public class MyService extends Service {
                 manager.createNotificationChannel(notificationChannel);
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, DEFAULT)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setSmallIcon(R.drawable.icon_img)
+                        .setSmallIcon(R.drawable.icon_noti_img)
                         .setContentTitle("배차요청")
                         .setContentText("새로운 배차 요청이 수신되었습니다.")
                         .setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
                 Intent intent = new Intent(context, Dispatch.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                Bundle bundle = new Bundle();
+                bundle.putString("vihiclenumber", vihiclenumber);
+                intent.putExtras(bundle);
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 builder.setContentIntent(pendingIntent);
                 manager.notify(1, builder.build());
@@ -112,7 +115,13 @@ public class MyService extends Service {
                 try{
                     JSONArray jsonArray = new JSONArray(response);
                     int length = jsonArray.length();
-                    if(length!=0 && length!=dispatchCount) {
+                    int count = 0;
+                    for(int i=0;i<length;i++) {
+                        JSONObject item = jsonArray.getJSONObject(i);
+                        String day = item.getString("day");
+                        if(getTime[2].equals(day)) count++;
+                    }
+                    if(count!=0 && length!=dispatchCount) {
                         mHandler.sendEmptyMessage(0);
                         dispatchCount = length;
                     }
