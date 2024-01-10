@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,8 @@ public class MyService extends Service {
     Context context = MyService.this;
     String vihiclenumber;
     int dispatchCount = 0;
+    Thread thread;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -49,8 +52,10 @@ public class MyService extends Service {
 
     public void onDestroy() {
         Log.d("service", "onDestory실행");
-        myRunning = false;
+        thread.start();
     }
+
+
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -76,30 +81,25 @@ public class MyService extends Service {
                 manager.notify(1, builder.build());
             }
 
-        };
+        }
+
+        ;
     };
     protected boolean myRunning;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("service", "onStartCommand실행");
-        if(intent == null) {
+        if (intent == null) {
             return Service.START_STICKY;
-        }else {
+        } else {
             vihiclenumber = intent.getStringExtra("vihiclenumber");
+            thread = new ServiceTread(mHandler, intent);
+            thread.start();
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                myRunning = true;
-                while(myRunning) {
-                    SystemClock.sleep(5000);
-                    getDispatchData();
-                }
-            }
-        }).start();
 
-        return START_STICKY_COMPATIBILITY;
+        return Service.START_STICKY;
     }
 
 
@@ -112,20 +112,22 @@ public class MyService extends Service {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try{
+                try {
                     JSONArray jsonArray = new JSONArray(response);
                     int length = jsonArray.length();
                     int count = 0;
-                    for(int i=0;i<length;i++) {
+                    for (int i = 0; i < length; i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
                         String day = item.getString("day");
-                        if(getTime[2].equals(day)) count++;
+                        if (getTime[2].equals(day)) count++;
                     }
-                    if(count!=0 && length!=dispatchCount) {
+                    if (count != 0 && length != dispatchCount) {
                         mHandler.sendEmptyMessage(0);
                         dispatchCount = length;
+                    } else {
+                        Toast.makeText(context, "running service", Toast.LENGTH_SHORT).show();
                     }
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -134,4 +136,35 @@ public class MyService extends Service {
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(requestDispatchVihicleData);
     }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Log.e("Error", "onTaskRemoved - 강제종료" + rootIntent);
+        Toast.makeText(context, "onTaskRemoved", Toast.LENGTH_SHORT).show();
+        stopSelf();
+    }
+
+    public class ServiceTread extends Thread {
+        Handler handler;
+        Intent intent;
+
+        public ServiceTread(Handler handler, Intent intent) {
+            this.handler = handler;
+            this.intent = intent;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                getDispatchData();
+                try {
+                    Thread.sleep(1000);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
+
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
 }
+

@@ -1,13 +1,17 @@
 package org.techtown.transmanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import android.Manifest;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     String vihiclenumber, password;
     Context context = MainActivity.this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 
 
 }

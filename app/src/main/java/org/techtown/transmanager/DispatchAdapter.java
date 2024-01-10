@@ -68,7 +68,7 @@ public class DispatchAdapter extends RecyclerView.Adapter<DispatchAdapter.ViewHo
             trans.setText(item.getStart()+" - "+item.getEnd());
             product.setText(item.getProduct());
             agency.setText(item.getAgency());
-            quantity.setText(item.getQuantity()+"대");
+            quantity.setText(item.getQuantity());
         }
     }
 
