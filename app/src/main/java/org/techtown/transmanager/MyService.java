@@ -34,6 +34,7 @@ import java.util.logging.LogRecord;
 
 public class MyService extends Service {
     private final String DEFAULT = "DEFAULT";
+    final String CHANNEL_ID = "tmpChanelId";
     Context context = MyService.this;
     String vihiclenumber;
     int dispatchCount = 0;
@@ -52,7 +53,6 @@ public class MyService extends Service {
 
     public void onDestroy() {
         Log.d("service", "onDestory실행");
-        thread.start();
     }
 
 
@@ -85,21 +85,51 @@ public class MyService extends Service {
 
         ;
     };
-    protected boolean myRunning;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("service", "onStartCommand실행");
+        vihiclenumber = intent.getStringExtra("vihiclenumber");
+
         if (intent == null) {
-            return Service.START_STICKY;
-        } else {
-            vihiclenumber = intent.getStringExtra("vihiclenumber");
-            thread = new ServiceTread(mHandler, intent);
-            thread.start();
+            return START_STICKY;
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel =
+                    new NotificationChannel(CHANNEL_ID, "알림 설정 모드 타이틀", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            assert manager != null;
+            manager.createNotificationChannel(serviceChannel);
+        }
 
-        return Service.START_STICKY;
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("광문화물운송")
+                .setContentText("배차 수신중입니다.")
+                .setSmallIcon(R.drawable.icon_noti_img)
+                .setContentIntent(pendingIntent)
+                .build();
+
+
+        startForeground(1, notification);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<30;i++) {
+                    try{
+                        Thread.sleep(5000);
+                    }catch (Exception e) {e.printStackTrace();}
+                    getDispatchData();
+                    Log.d("service", "running service");
+                }
+
+            }
+        }).start();
+
+        return super.onStartCommand(intent, flags, startId);
     }
 
 
@@ -135,36 +165,6 @@ public class MyService extends Service {
         RequestDispatchVihicleData requestDispatchVihicleData = new RequestDispatchVihicleData(getTime[0], getTime[1], vihiclenumber, responseListener);
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(requestDispatchVihicleData);
-    }
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        Log.e("Error", "onTaskRemoved - 강제종료" + rootIntent);
-        Toast.makeText(context, "onTaskRemoved", Toast.LENGTH_SHORT).show();
-        stopSelf();
-    }
-
-    public class ServiceTread extends Thread {
-        Handler handler;
-        Intent intent;
-
-        public ServiceTread(Handler handler, Intent intent) {
-            this.handler = handler;
-            this.intent = intent;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                getDispatchData();
-                try {
-                    Thread.sleep(1000);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
-
-                } catch (Exception e) {
-                }
-            }
-        }
     }
 }
 

@@ -55,6 +55,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         setNotiPermission();
+        startService();
 
         //번들에서 값 받아오기
         Intent intent_bundle = getIntent();
@@ -168,6 +169,14 @@ public class Home extends AppCompatActivity {
 
                 }
                 return;
+        }
+    }
+
+    public void startService() {
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("vihiclenumber", vihiclenumber);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
         }
     }
 
