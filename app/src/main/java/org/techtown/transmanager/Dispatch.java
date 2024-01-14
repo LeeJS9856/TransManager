@@ -30,6 +30,7 @@ public class Dispatch extends AppCompatActivity {
     String vihicle_number;
     Context context = Dispatch.this;
     static ArrayList<TransData> data = new ArrayList<>();
+    final String conf = "CHECK";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +115,12 @@ public class Dispatch extends AppCompatActivity {
                 }
             }
         };
-        RequestDispatchVihicleData requestDispatchVihicleData = new RequestDispatchVihicleData(today[0], today[1], vihicle_number, responseListener);
+        RequestDispatchVihicleData requestDispatchVihicleData = new RequestDispatchVihicleData(today[0], today[1], vihicle_number, conf, responseListener);
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(requestDispatchVihicleData);
+
+
     }
+
+
 }

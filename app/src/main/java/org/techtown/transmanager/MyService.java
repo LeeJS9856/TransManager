@@ -37,7 +37,7 @@ public class MyService extends Service {
     final String CHANNEL_ID = "tmpChanelId";
     Context context = MyService.this;
     String vihiclenumber;
-    int dispatchCount = 0;
+    String conf = "UNCHECK";
     Thread thread;
 
     @Nullable
@@ -79,11 +79,13 @@ public class MyService extends Service {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 builder.setContentIntent(pendingIntent);
                 manager.notify(1, builder.build());
+
+
             }
 
         }
 
-        ;
+
     };
 
     @Override
@@ -108,6 +110,7 @@ public class MyService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("광문화물운송")
                 .setContentText("배차 수신중입니다.")
+                .setSound(null)
                 .setSmallIcon(R.drawable.icon_noti_img)
                 .setContentIntent(pendingIntent)
                 .build();
@@ -120,9 +123,10 @@ public class MyService extends Service {
             public void run() {
                 for(int i=0;i<30;i++) {
                     try{
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     }catch (Exception e) {e.printStackTrace();}
                     getDispatchData();
+                    updateDispatchData();
                     Log.d("service", "running service");
                 }
 
@@ -143,28 +147,49 @@ public class MyService extends Service {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("service", response+"");
                     JSONArray jsonArray = new JSONArray(response);
+
                     int length = jsonArray.length();
-                    int count = 0;
+                    boolean toggle = false;
                     for (int i = 0; i < length; i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
                         String day = item.getString("day");
-                        if (getTime[2].equals(day)) count++;
+                        if (getTime[2].equals(day)){
+                            toggle = true;
+                        }
                     }
-                    if (count != 0 && length != dispatchCount) {
+                    if(toggle) {
                         mHandler.sendEmptyMessage(0);
-                        dispatchCount = length;
-                    } else {
-                        Toast.makeText(context, "running service", Toast.LENGTH_SHORT).show();
+                        Log.d("service", "connecting to Server");
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
-        RequestDispatchVihicleData requestDispatchVihicleData = new RequestDispatchVihicleData(getTime[0], getTime[1], vihiclenumber, responseListener);
+        RequestDispatchVihicleData requestDispatchVihicleData = new RequestDispatchVihicleData(getTime[0], getTime[1], vihiclenumber, conf,  responseListener);
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(requestDispatchVihicleData);
+
+
+    }
+    private void updateDispatchData() {
+        //배차 읽음 표시
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    Log.d("updateDisplayData", response+"");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        UpdateDispatchData updateDispatchData = new UpdateDispatchData(vihiclenumber, "CHECK", responseListener);
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(updateDispatchData);
     }
 }
 
