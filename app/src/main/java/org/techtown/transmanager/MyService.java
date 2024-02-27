@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +39,6 @@ public class MyService extends Service {
     Context context = MyService.this;
     String vihiclenumber;
     String conf = "UNCHECK";
-    Thread thread;
 
     @Nullable
     @Override
@@ -80,7 +80,7 @@ public class MyService extends Service {
                 builder.setContentIntent(pendingIntent);
                 manager.notify(1, builder.build());
 
-
+                updateDispatchData();
             }
 
         }
@@ -99,7 +99,7 @@ public class MyService extends Service {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel =
-                    new NotificationChannel(CHANNEL_ID, "알림 설정 모드 타이틀", NotificationManager.IMPORTANCE_DEFAULT);
+                    new NotificationChannel(CHANNEL_ID, "알림 설정 모드 타이틀", NotificationManager.IMPORTANCE_LOW);
             NotificationManager manager = getSystemService(NotificationManager.class);
             assert manager != null;
             manager.createNotificationChannel(serviceChannel);
@@ -110,23 +110,26 @@ public class MyService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("광문화물운송")
                 .setContentText("배차 수신중입니다.")
-                .setSound(null)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setSmallIcon(R.drawable.icon_noti_img)
                 .setContentIntent(pendingIntent)
                 .build();
 
 
-        startForeground(1, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(1, notification);
+        }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i=0;i<30;i++) {
+                while(true) {
                     try{
                         Thread.sleep(10000);
+                        getDispatchData();
                     }catch (Exception e) {e.printStackTrace();}
-                    getDispatchData();
-                    updateDispatchData();
+
+
                     Log.d("service", "running service");
                 }
 

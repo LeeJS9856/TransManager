@@ -60,6 +60,12 @@ public class RegistTrans extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         String vihicle_number = bundle.getString("vihicle_number");
 
+        String intent_product = bundle.getString("product");
+        String intent_start = bundle.getString("start");
+        String intent_end = bundle.getString("end");
+        String intent_quantity = bundle.getString("quantity");
+        String intent_agency = bundle.getString("agency");
+
         //xml과 연결
         bt_back = findViewById(R.id.back);
         sp_agency = findViewById(R.id.spinner_agency);
@@ -76,6 +82,8 @@ public class RegistTrans extends AppCompatActivity {
                 finish();
             }
         });
+
+        ed_quantity.setText(intent_quantity);
 
         //서버에서 맵 데이터 가져오기
         Response.Listener<String> mapResponseListener = new Response.Listener<String>() {
@@ -143,6 +151,28 @@ public class RegistTrans extends AppCompatActivity {
                 sp_to.setAdapter(toAdapter);
                 sp_product.setAdapter(productAdapter);
                 sp_agency.setAdapter(agencyAdapter);
+
+                //초기값 설정
+                for(int i=0;i<arr_From.length;i++) {
+                    if(arr_From[i].equals(intent_start)) {
+                        sp_from.setSelection(i);
+                    }
+                }
+                for(int i=0;i<arr_To.length;i++) {
+                    if(arr_To[i].equals(intent_end)) {
+                        sp_to.setSelection(i);
+                    }
+                }
+                for(int i=0;i<arr_Product.length;i++) {
+                    if(arr_Product[i].equals(intent_product)) {
+                        sp_product.setSelection(i);
+                    }
+                }
+                for(int i=0;i<arr_Agency.length;i++) {
+                    if(arr_Agency[i].equals(intent_agency)) {
+                        sp_agency.setSelection(i);
+                    }
+                }
 
 
                 sp_from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
